@@ -1,0 +1,123 @@
+// These snippets can be pasted into your VS Code user snippets for use in your own workflow.
+
+{
+  "Knack Scene Re-render Trigger": {
+    "prefix": "kn-trigger-render",
+    "body": ["Knack.router.scene_view.render();"],
+    "description": "Triggers a scene/view render without reloading page."
+  },
+
+  "Knack Prevent Table Inline Edit": {
+    "prefix": "prevent-inline-edit",
+    "body": [
+      "$('.cell-edit').on('click', function (e) {",
+      "//this blocks the inline edit click event",
+      "e.stopPropagation();",
+      "e.stopImmediatePropagation();",
+      "});",
+      "$('.cell-edit').on('mouseenter', function (e) {",
+      "// disables the hover effects Knack puts on inline edit cells",
+      "Knack.$(e.currentTarget).css('background', 'none');",
+      "Knack.$(e.currentTarget).css('cursor', 'default');",
+      "});"
+    ],
+    "description": "Prevents the default inline edit behavior on all table cells with class 'cell-edit'."
+  },
+
+  "Knack View Render": {
+    "prefix": "kn-view-render",
+    "body": ["$(document).on('knack-view-render.$1', function(event, view, data) {\n$2\n});"],
+    "description": "Boilerplate for adding a Knack View Render handler"
+  },
+
+  "Knack Scene Render": {
+    "prefix": "kn-scene-render",
+    "body": ["$(document).on('knack-scene-render.$1', function(event, scene) {\n$2\n});"],
+    "description": "Boilerplate for adding a Knack Scene Render handler"
+  },
+
+  "Knack LazyLoad JS": {
+    "prefix": "kn-lazyload-js",
+    "body": ["LazyLoad.js(['$1'$2], function () {\n$3\n});"],
+    "description": "Knack LazyLoad js"
+  },
+
+  "Knack After Record Create": {
+    "prefix": "kn-record-create",
+    "body": [
+      "$(document).on('knack-record-create.view_$1', function(event, view, record) {\n$2\n});"
+    ],
+    "description": "Boilerplate for adding a Knack Record Creation handler"
+  },
+
+  "Knack After Record Delete": {
+    "prefix": "kn-record-delete",
+    "body": [
+      "$(document).on('knack-record-delete.view_$1', function(event, view, record) {\n$2\n});"
+    ],
+    "description": "Boilerplate for adding a Knack Record Deletion handler"
+  },
+
+  "Knack After Record Update": {
+    "prefix": "kn-record-update",
+    "body": [
+      "$(document).on('knack-record-update.view_$1', function(event, view, record) {\n$2\n});"
+    ],
+    "description": "Boilerplate for adding a Knack Record Update handler"
+  },
+
+  "Knack On Form Submit": {
+    "prefix": "kn-form-submit",
+    "body": [
+      "$(document).on('knack-form-submit.view_$1', function(event, view, record) {\n$2\n});"
+    ],
+    "description": "Boilerplate for adding a Knack Form Submission handler"
+  },
+
+  "Knack doAJAX": {
+    "prefix": "kn-do-AJAX",
+    "body": [
+      "/**",
+      "* Instructions:",
+      "DO NOT FORGET TO ADD HEADER DETAILS TO GLOBAL OBJ",
+      " let settings = {",
+      "  objectId: 'object_7',",
+      "  type: 'PUT',",
+      "  recordId: id,",
+      "  payload: {",
+      "    field_56: pos, //Order Field",
+      "  },",
+      "  filter: {",
+      "    rules: [",
+      "      {",
+      "        field: 'field_55',",
+      "        operator: 'is',",
+      "        value: Knack.fn.getMenuId(),",
+      "      },",
+      "    ],",
+      "  },",
+      "};",
+      "*/",
+      "Knack.fn.doAjax = function (settings, callback) {",
+      " let reqUrl = `${Knack.dt.url}/${settings.objectId}/records/`;",
+      " if (settings.filter) {",
+      "   reqUrl += `?filters=` + encodeURIComponent(JSON.stringify(settings.filter));",
+      " }",
+      " if (settings.recordId) {",
+      "   reqUrl += `${settings.recordId}`;",
+      " }",
+      " Knack.$.ajax({",
+      "   url: reqUrl,",
+      "   type: settings.type,",
+      "   dataType: 'json',",
+      "   headers: Knack.dt.headers,",
+      "   data: JSON.stringify(settings.payload),",
+      "   success: function (data) {",
+      "     typeof callback === 'function' ? callback(data) : false;",
+      "   },",
+      " });",
+      "};"
+    ],
+    "description": "Knack Ajax Record"
+  }
+}
